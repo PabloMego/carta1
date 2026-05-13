@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
             envelopeWrapper.style.transition = 'transform 0.8s ease';
             envelopeWrapper.style.transform = `rotateX(${targetRotateX}deg) rotateY(${targetRotateY}deg)`;
             
-            // Wait for the opening animation, then redirect directly to the PDF
+            // Wait for the opening animation and let them see the photo, then redirect directly to the PDF
             setTimeout(() => {
                 window.location.href = './te_amo_pichurri.pdf';
-            }, 1800); // 1.8 seconds delay
+            }, 4500); // 4.5 seconds delay
         } else {
             envelope.classList.remove('open');
             // Go back to an angled view showing the flap again
