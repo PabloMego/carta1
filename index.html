@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Romántica 3D</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    
+    <div class="instructions">
+        <span>Gira el sobre con el dedo</span><br>
+        <span style="font-size: 0.8rem; opacity: 0.8;">Busca el sello en el dorso para abrirla</span>
+    </div>
+    
+    <div class="scene">
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <!-- Top Flap (opens) -->
+                <div class="flap">
+                    <div class="wax-seal"></div>
+                </div>
+                
+                <!-- Back side (faces away initially, has stamp) -->
+                <div class="back">
+                    <div class="stamp-container">
+                        <div class="stamp"></div>
+                    </div>
+                    <div class="address">
+                        <p>Para: <strong>Alba</strong></p>
+                        <p>De: <strong>Pablo</strong></p>
+                    </div>
+                </div>
+                
+                <!-- The Letter inside -->
+                <div class="letter">
+                    <div class="letter-content">
+                        <h1 class="letter-title">Te Amo Pichurri</h1>
+                        <p class="letter-text">Toca el botón para ver tu sorpresa especial.</p>
+                        <a href="./te_amo_pichurri.pdf" target="_blank" class="download-btn">
+                            Abrir Sorpresa
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Front side (faces user initially, has bottom and side flaps) -->
+                <div class="front">
+                    <div class="flap-left"></div>
+                    <div class="flap-right"></div>
+                    <div class="flap-bottom"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

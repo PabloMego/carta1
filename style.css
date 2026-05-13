@@ -1,0 +1,374 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600&family=Great+Vibes&display=swap');
+
+:root {
+    --bg-color: #1e3a8a;
+    --envelope-color: #ffffff;
+    --envelope-dark: #dbeafe; /* Light blue accent for flaps */
+    --envelope-blue: #93c5fd;
+    --letter-bg: #ffffff;
+    --accent: #ec4899; /* Pink */
+    --accent-dark: #be185d;
+    --text-main: #1e3a8a; /* Deep blue text */
+    --text-muted: #475569;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, #1e3a8a 0%, #312e81 40%, #831843 100%);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: var(--text-main);
+    perspective: 2000px;
+}
+
+.background-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: #ec4899; /* Pink */
+    top: -200px;
+    left: -100px;
+    animation: float 12s ease-in-out infinite alternate;
+}
+
+.blob-2 {
+    width: 700px;
+    height: 700px;
+    background: #3b82f6; /* Blue */
+    bottom: -200px;
+    right: -200px;
+    animation: float 15s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(80px, 80px) scale(1.1); }
+}
+
+.instructions {
+    position: absolute;
+    top: 40px;
+    text-align: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 1.2rem;
+    font-weight: 400;
+    z-index: 10;
+    pointer-events: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.scene {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 2500px;
+}
+
+.envelope-wrapper {
+    width: 650px;
+    height: 420px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.envelope {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.envelope.open {
+    transform: translateY(200px);
+}
+
+.front, .back, .letter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    backface-visibility: hidden;
+}
+
+/* Front is the flap side, facing user */
+.front {
+    transform: translateZ(2px);
+    z-index: 3;
+    background: var(--envelope-blue);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.flap-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 55%;
+    height: 100%;
+    background-color: var(--envelope-color);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    box-shadow: inset -5px 0 15px rgba(0,0,0,0.05);
+}
+
+.flap-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 55%;
+    height: 100%;
+    background-color: var(--envelope-color);
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    box-shadow: inset 5px 0 15px rgba(0,0,0,0.05);
+}
+
+.flap-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-color: var(--envelope-color);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    filter: drop-shadow(0 -8px 12px rgba(0,0,0,0.05));
+}
+
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-color: var(--envelope-color);
+    clip-path: polygon(0 0, 50% 100%, 100% 0);
+    transform-origin: top;
+    transform: translateZ(4px) rotateX(0deg);
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.6s;
+    z-index: 4;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1));
+}
+
+.envelope.open .flap {
+    transform: translateZ(-4px) rotateX(180deg);
+    z-index: 0;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s 0.6s;
+}
+
+/* Back is the stamp side, facing away */
+.back {
+    background-color: var(--envelope-color);
+    transform: rotateY(180deg) translateZ(2px);
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    background-image: url('data:image/svg+xml;utf8,<svg opacity="0.02" xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="1" fill="%231e3a8a"/></svg>');
+}
+
+.stamp-container {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    transform: rotate(4deg);
+}
+
+.stamp {
+    width: 80px;
+    height: 100px;
+    background: url('https://images.unsplash.com/photo-1518199268815-95a206b4daaa?auto=format&fit=crop&w=200&q=80') center/cover;
+    border: 4px solid #fff;
+    border-radius: 2px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.address {
+    align-self: flex-end;
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--text-main);
+    margin-left: 20px;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.8);
+    transform: rotate(-2deg);
+}
+
+.address p {
+    margin: 10px 0;
+}
+
+.letter {
+    background-color: var(--letter-bg);
+    transform: translateZ(1px);
+    z-index: 2;
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s, height 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s, box-shadow 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s;
+    padding: 3px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.envelope.open .letter {
+    transform: translateY(-300px) translateZ(50px) scale(1.1);
+    z-index: 5;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+.letter-content {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+    border: 1px solid var(--envelope-dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.letter-content::before {
+    content: '';
+    position: absolute;
+    top: 15px; left: 15px; right: 15px; bottom: 15px;
+    border: 1px solid var(--envelope-blue);
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+.letter-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: var(--accent);
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(236,72,153,0.2);
+}
+
+.letter-text {
+    color: var(--text-muted);
+    margin-bottom: 35px;
+    font-size: 1.3rem;
+    line-height: 1.5;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.4);
+    border: none;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.6);
+}
+
+/* Wax Seal on top of the flap */
+.wax-seal {
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65px;
+    height: 65px;
+    background: radial-gradient(circle at 30% 30%, #3b82f6, #1e3a8a); /* Blue seal */
+    border-radius: 50%;
+    box-shadow: 
+        0 4px 10px rgba(0,0,0,0.3),
+        inset 0 0 10px rgba(30, 58, 138, 0.8),
+        inset 0 0 5px rgba(255,255,255,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+}
+
+.wax-seal:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+.wax-seal::after {
+    content: 'P & A';
+    font-family: 'Great Vibes', cursive;
+    color: rgba(255,255,255,0.8);
+    font-size: 20px;
+    text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(255,255,255,0.3);
+}
+
+.envelope.open .wax-seal {
+    opacity: 0;
+}
+
+@media (max-width: 768px) {
+    .envelope-wrapper {
+        width: 90vw;
+        height: 65vw;
+    }
+    
+    .envelope.open {
+        transform: translateY(15vh);
+    }
+    
+    .envelope.open .letter {
+        transform: translateY(-40vh) translateZ(50px);
+        height: 70vh;
+    }
+    
+    .address {
+        font-size: 2.5rem;
+        margin-left: 10px;
+    }
+    
+    .stamp {
+        width: 50px;
+        height: 65px;
+    }
+    
+    .stamp-container {
+        top: 20px;
+        right: 20px;
+    }
+}
